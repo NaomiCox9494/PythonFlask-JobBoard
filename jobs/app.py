@@ -9,7 +9,7 @@ def open_connection():
     connection = getattr(g, '_connection', None)
     if connection == None:
         connection = g._connection = sqlite3.connect(PATH)
-    connection.row_factory = sqlite3.row_factory
+    connection.row_factory = sqlite3.Row
     return connection
 
 def execute_sql(sql, values=(), commit=False, single=False):
@@ -23,7 +23,7 @@ def execute_sql(sql, values=(), commit=False, single=False):
         cursor.close()
         return results
 
-@app.teardown_appcontext        
+@app.teardown_appcontext
 def close_connection(exeption):
     conenction = getattr(g, '_connection', None)
     if connection is not None:
